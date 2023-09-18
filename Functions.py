@@ -12,7 +12,7 @@ def CalcArray(PrepFunc):
     import math
     import numpy as np
     coords = []
-    for T in np.linspace(-0*np.pi, 2*np.pi, 32769):
+    for T in np.linspace(-20*np.pi, 20*np.pi, 32769):
         ftemp = PrepFunc.replace("value", str(T))
         coords.append(round(eval(ftemp), 8))
     return coords

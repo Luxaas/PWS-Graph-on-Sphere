@@ -4,9 +4,10 @@ import numpy as np
 
 from Functions import *
 
-fx = input("wat moet x(t) zijn? ")
-fy = input("wat moet xy(t) zijn? ")
-
+# fx = input("wat moet x(t) zijn? ")
+# fy = input("wat moet xy(t) zijn? ")
+fx = "sin(5*t)"
+fy = "sin(6*t)" 
 
 xCoords = []
 yCoords = []
