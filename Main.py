@@ -4,10 +4,8 @@ import numpy as np
 
 from Functions import *
 
-# fx = input("wat moet x(t) zijn? ")
-# fy = input("wat moet xy(t) zijn? ")
-fx = "cos(t)"
-fy = "sin(t)"
+fx = input("wat moet x(t) zijn? ")
+fy = input("wat moet xy(t) zijn? ")
 
 
 xCoords = []
@@ -18,4 +16,10 @@ xCoords = CalcArray(fxPrep)
 
 fyPrep = Prep(fy)
 yCoords = CalcArray(fyPrep)
-print(xCoords)
+
+# print(xCoords)
+
+# print(yCoords)
+
+plt.plot(xCoords, yCoords)
+plt.show()
