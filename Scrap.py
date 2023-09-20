@@ -1,5 +1,5 @@
-import math
+from PIL import Image
 import numpy as np
-theta = 0.5*np.pi
-r = math.cos(theta)
-print(r)
+im = Image.open("new.png")
+a = np.asarray(im)
+print(type(a[1]))

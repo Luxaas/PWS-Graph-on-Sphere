@@ -12,7 +12,7 @@ def CalcArray(PrepFunc):
     import math
     import numpy as np
     coords = []
-    for T in np.linspace(-0.4995*np.pi, 0.4995*np.pi, (2**5 + 1)):
+    for T in np.linspace(-0.4995*np.pi, 0.4995*np.pi, (2**16 + 1)):
         num = math.tan(T)
         ftemp = PrepFunc.replace("value", str(num))
         coords.append(round(eval(ftemp), 8))
@@ -26,3 +26,15 @@ def Scaler(CoordsList):
         CoordsList[tel] = math.atan(coord)/(0.5*np.pi)
         tel +=1 
     return CoordsList
+
+def PixCalc(IW, IH, xC, yC):
+    import numpy as np
+    Pixels = np.empty([IW, IH, 3])
+    Pixels.fill(255)
+    myC = min(yC)
+    mxC = min(xC)
+    maxC = max(xC)
+    mayC = max(yC)
+    for l in range(len(xC)):
+        Pixels[int(round((yC[l])*(IH-1)))][int(round((xC[l])*(IW-1)))] = (0, 0, 0)
+    return Pixels

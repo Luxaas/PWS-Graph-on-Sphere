@@ -1,17 +1,19 @@
 import math
 import matplotlib.pyplot as plt
 import numpy as np
+import timeit
+from PIL import Image
 
 from Functions import *
-test = []
-deezer = []
+
+ImgWidth, ImgHeight = 500, 500
 
 fx = 't'
 fy = '(t)^2'
 # fx = input("wat moet x(t) zijn? ")
 # fy = input("wat moet y(t) zijn? ")
 
-import timeit
+
 tic=timeit.default_timer()
 
 fxPrep = Prep(fx)
@@ -23,8 +25,19 @@ yCoords = CalcArray(fyPrep)
 yCoordsScaled = Scaler(yCoords)
 
 toc=timeit.default_timer()
-print(round((toc-tic)*1000, 5))
+print(str(round((toc-tic)*1000, 8))+ 'ms (Prep + CalcArray + Scaler)')
 
 
-plt.plot(xCoordsScaled, yCoordsScaled)
-plt.show()
+tic=timeit.default_timer()
+Pixels = PixCalc(ImgHeight, ImgWidth, xCoordsScaled, yCoordsScaled)
+toc=timeit.default_timer()
+print(str(round((toc-tic)*1000, 8))+ 'ms (Calculating Pixels)')
+
+
+array = np.array(Pixels, dtype=np.uint8)
+new_image = Image.fromarray(array)
+new_image.save('new.png')
+print(xCoordsScaled)
+
+# plt.plot(xCoordsScaled, yCoordsScaled)
+# plt.show()
