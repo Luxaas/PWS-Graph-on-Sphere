@@ -5,11 +5,7 @@ import numpy as np
 from Functions import *
 
 fx = input("wat moet x(t) zijn? ")
-fy = input("wat moet xy(t) zijn? ")
-
-
-xCoords = []
-yCoords = []
+fy = input("wat moet y(t) zijn? ")
 
 fxPrep = Prep(fx)
 xCoords = CalcArray(fxPrep)
