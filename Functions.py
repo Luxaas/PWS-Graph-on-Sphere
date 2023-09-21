@@ -12,8 +12,8 @@ def CalcArray(PrepFunc):
     import math
     import numpy as np
     coords = []
-    for T in np.linspace(-0.4995*np.pi, 0.4995*np.pi, (2**16 + 1)):
-        num = math.tan(T)
+    for T in np.linspace(-0.4995*np.pi, 0.4995*np.pi, (2**18 + 1)):
+        num = math.tan(T)*0.5
         ftemp = PrepFunc.replace("value", str(num))
         coords.append(round(eval(ftemp), 8))
     return coords
@@ -23,7 +23,7 @@ def Scaler(CoordsList):
     import numpy as np
     tel = 0
     for coord in CoordsList:
-        CoordsList[tel] = math.atan(coord)/(0.5*np.pi)
+        CoordsList[tel] = (math.atan(coord)*2)/(0.5*np.pi)
         tel +=1 
     return CoordsList
 
