@@ -8,8 +8,8 @@ from Functions import *
 
 ImgWidth, ImgHeight = 500, 500
 
-fx = 't'
-fy = '(t)^2'
+fx = 'cos(t)'
+fy = 'sin(t)'
 # fx = input("wat moet x(t) zijn? ")
 # fy = input("wat moet y(t) zijn? ")
 
@@ -37,7 +37,6 @@ print(str(round((toc-tic)*1000, 8))+ 'ms (Calculating Pixels)')
 array = np.array(Pixels, dtype=np.uint8)
 new_image = Image.fromarray(array)
 new_image.save('new.png')
-print(xCoordsScaled)
 
 plt.plot(xCoordsScaled, yCoordsScaled)
 plt.show()
