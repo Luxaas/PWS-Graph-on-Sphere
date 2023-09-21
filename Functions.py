@@ -36,5 +36,5 @@ def PixCalc(IW, IH, xC, yC):
     maxC = max(xC)
     mayC = max(yC)
     for l in range(len(xC)):
-        Pixels[int(round((yC[l])*(IH-1)))][int(round((xC[l])*(IW-1)))] = (0, 0, 0)
+        Pixels[int(round((yC[l]-myC)*(IH-1)))][int(round((xC[l]-mxC)*(IW-1)))] = (0, 0, 0)
     return Pixels

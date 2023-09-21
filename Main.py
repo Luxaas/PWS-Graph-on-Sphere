@@ -39,5 +39,5 @@ new_image = Image.fromarray(array)
 new_image.save('new.png')
 print(xCoordsScaled)
 
-# plt.plot(xCoordsScaled, yCoordsScaled)
-# plt.show()
+plt.plot(xCoordsScaled, yCoordsScaled)
+plt.show()
