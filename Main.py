@@ -6,10 +6,12 @@ from PIL import Image
 
 from Functions import *
 
-ImgWidth, ImgHeight = 500, 500
+ImgWidth, ImgHeight = 1000, 1000 
 
-fx = 'cos(t)'
-fy = 'sin(t)'
+fx, fy = 't', 'sin(t)'
+
+Scale = 1
+
 # fx = input("wat moet x(t) zijn? ")
 # fy = input("wat moet y(t) zijn? ")
 
@@ -18,11 +20,11 @@ tic=timeit.default_timer()
 
 fxPrep = Prep(fx)
 xCoords = CalcArray(fxPrep)
-xCoordsScaled = Scaler(xCoords)
+xCoordsScaled = Scaler(xCoords, Scale)
 
 fyPrep = Prep(fy)
 yCoords = CalcArray(fyPrep)
-yCoordsScaled = Scaler(yCoords)
+yCoordsScaled = Scaler(yCoords, Scale)
 
 toc=timeit.default_timer()
 print(str(round((toc-tic)*1000, 8))+ 'ms (Prep + CalcArray + Scaler)')
@@ -39,4 +41,4 @@ new_image = Image.fromarray(array)
 new_image.save('new.png')
 
 plt.plot(xCoordsScaled, yCoordsScaled)
-plt.show()
+# plt.show()

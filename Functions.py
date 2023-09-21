@@ -12,30 +12,31 @@ def CalcArray(PrepFunc):
     import math
     import numpy as np
     coords = []
-    for T in np.linspace(-0.4995*np.pi, 0.4995*np.pi, (2**18 + 1)):
-        num = math.tan(T)*0.5
+    for T in np.linspace(-0.4999*np.pi, 0.4999*np.pi, (2**14 + 1)):
+        num = math.tan(T)
         ftemp = PrepFunc.replace("value", str(num))
-        coords.append(round(eval(ftemp), 8))
+        try:
+            coords.append(eval(ftemp))
+        except ZeroDivisionError:
+            coords.append('skip')
+            
     return coords
 
-def Scaler(CoordsList):
+def Scaler(CoordsList, Scale):
     import math
     import numpy as np
     tel = 0
     for coord in CoordsList:
-        CoordsList[tel] = (math.atan(coord)*2)/(0.5*np.pi)
+        if coord != 'skip':
+            CoordsList[tel] = (math.atan(coord*Scale))/(0.5*np.pi)
         tel +=1 
     return CoordsList
 
 def PixCalc(IW, IH, xC, yC):
     import numpy as np
-    Pixels = np.empty([IW, IH, 3])
+    Pixels = np.empty([IH, IW, 3])
     Pixels.fill(255)
-    myC = min(yC)
-    mxC = min(xC)
-    maxC = max(xC)
-    mayC = max(yC)
-    print((1/(maxC-mxC)))
     for l in range(len(xC)):
-        Pixels[int(round((yC[l]-myC)*(1/(mayC-myC))*(IH-1)))][int(round((xC[l]-mxC)*(1/(maxC-mxC))*(IW-1)))] = (0, 0, 0)
+        if xC[l] != 'skip' and yC[l] != 'skip':
+            Pixels[int(-(round((yC[l]+1)*0.5*(IH))-1))][int(round((xC[l]+1)*0.5*(IW)-1))] = (0, 0, 0)
     return Pixels
