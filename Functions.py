@@ -1,7 +1,5 @@
 def Prep(Func):
-    Func = Func.replace("t", "value")
-    Func = Func.replace("sqrvalue", "math.sqrt")
-    function = ["cos", "sin", "tan"]
+    function = ["cos", "sin", "tan", "sqrt"]
     Func = Func.replace(",", ".")
     Func = Func.replace("^", "**")
     for p in function:
@@ -13,11 +11,10 @@ def CalcArray(PrepFunc):
     import math
     import numpy as np
     coords = []
-    for T in np.linspace(-0.4999*np.pi, 0.4999*np.pi, (2**20 + 1)):
-        num = math.tan(T)
-        ftemp = PrepFunc.replace("value", str(num))
+    for T in np.linspace(-0.4999*np.pi, 0.4999*np.pi, (2**16 + 1)):
+        t = math.tan(T)
         try:
-            coords.append(eval(ftemp))
+            coords.append(eval(PrepFunc))
         except ZeroDivisionError:
             coords.append('skip')
             
@@ -33,13 +30,10 @@ def Scaler(CoordsList, Scale):
         tel +=1 
     return CoordsList
 
-def PixCalc(IW, IH, xC, yC):
-    import numpy as np
-    Pixels = np.empty([IH, IW, 3])
-    Pixels.fill(255)
+def PixCalc(IW, IH, xC, yC, Pixels, r, g, b):
     for l in range(len(xC)):
         if xC[l] != 'skip' and yC[l] != 'skip':
-            Pixels[int(-(round((yC[l]+1)*0.5*(IH))-1))][int(round((xC[l]+1)*0.5*(IW)-1))] = (0, 0, 0)
+            Pixels[int(-(round((yC[l]+1)*0.5*(IH))-1))][int(round((xC[l]+1)*0.5*(IW)-1))] = (r, g, b)
     return Pixels
 
 def PointCreation(Pixels, IH, IW, X, Y, Scale, r, g, b):
@@ -55,4 +49,8 @@ def PointCreation(Pixels, IH, IW, X, Y, Scale, r, g, b):
         Pixels[CirY][CirX] = (r, g, b)
     return(Pixels)
     
+def Coords(f, scale):
+    f = Prep(f)
+    f = CalcArray(f)
+    return Scaler(f, scale)
     
