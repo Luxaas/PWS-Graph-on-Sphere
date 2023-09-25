@@ -1,5 +1,6 @@
 def Prep(Func):
     Func = Func.replace("t", "value")
+    Func = Func.replace("sqrvalue", "math.sqrt")
     function = ["cos", "sin", "tan"]
     Func = Func.replace(",", ".")
     Func = Func.replace("^", "**")
@@ -12,7 +13,7 @@ def CalcArray(PrepFunc):
     import math
     import numpy as np
     coords = []
-    for T in np.linspace(-0.4999*np.pi, 0.4999*np.pi, (2**14 + 1)):
+    for T in np.linspace(-0.4999*np.pi, 0.4999*np.pi, (2**20 + 1)):
         num = math.tan(T)
         ftemp = PrepFunc.replace("value", str(num))
         try:
@@ -40,3 +41,18 @@ def PixCalc(IW, IH, xC, yC):
         if xC[l] != 'skip' and yC[l] != 'skip':
             Pixels[int(-(round((yC[l]+1)*0.5*(IH))-1))][int(round((xC[l]+1)*0.5*(IW)-1))] = (0, 0, 0)
     return Pixels
+
+def PointCreation(Pixels, IH, IW, X, Y, Scale, r, g, b):
+    import numpy as np
+    import math
+    ts = np.linspace(0, 2*np.pi, 101)
+    PosX = int(((math.atan(X*Scale)/np.pi))*IW+0.5*IW)
+    PosY = int(-((math.atan(Y*Scale)/np.pi))*IH+0.5*IH)
+    for t in ts: 
+        # Pixels[int((math.atan(X*Scale)*0.3 + (IW/20000)*math.cos(float(t)))*IW + 0.5*IW)][int((math.atan(Y*Scale)*0.3 + (IH/20000)*math.sin(float(t)))*IH + 0.5*IH)] = (255, 0, 255)
+        CirX = int(PosX + (IW/100)*math.cos(float(t)))
+        CirY = int(PosY + (IH/100)*math.sin(float(t)))
+        Pixels[CirY][CirX] = (r, g, b)
+    return(Pixels)
+    
+    

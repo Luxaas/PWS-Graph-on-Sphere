@@ -8,8 +8,10 @@ from Functions import *
 
 ImgWidth, ImgHeight = 1000, 1000 
 
-fx, fy = 't', 'sin(t)'
-
+fx, fy = 'sin(t*51)', 'sin(t*50)'
+xPoints1, yPoints1, r1, g1, b1 = 0, 0, 255, 0, 0
+xPoints2, yPoints2, r2, g2, b2 = 1, 1, 0, 255, 0
+xPoints3, yPoints3, r3, g3, b3 = 10, 10, 0, 0, 255
 Scale = 1
 
 # fx = input("wat moet x(t) zijn? ")
@@ -35,6 +37,9 @@ Pixels = PixCalc(ImgHeight, ImgWidth, xCoordsScaled, yCoordsScaled)
 toc=timeit.default_timer()
 print(str(round((toc-tic)*1000, 8))+ 'ms (Calculating Pixels)')
 
+Pixels = PointCreation(Pixels, ImgHeight, ImgWidth, xPoints1, yPoints1, Scale, r1, g1, b1)
+Pixels = PointCreation(Pixels, ImgHeight, ImgWidth, xPoints2, yPoints2, Scale, r2, g2, b2)
+Pixels = PointCreation(Pixels, ImgHeight, ImgWidth, xPoints3, yPoints3, Scale, r3, g3, b3)
 
 array = np.array(Pixels, dtype=np.uint8)
 new_image = Image.fromarray(array)
