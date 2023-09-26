@@ -12,7 +12,7 @@ Pixels = np.empty([ImgHeight, ImgWidth, 3])
 Pixels.fill(255)
 
 # f(x) = 1/x, f(x) = x, f(x) = x^2, f(x) = sqrt(abs(x))
-fx, fy = 't', '1/t'
+fx, fy = 't', 't^2'
 xPoints1, yPoints1, r1, g1, b1 = 0, 0, 191, 191, 191
 xPoints2, yPoints2, r2, g2, b2 = 1, 1, 0, 255, 0
 xPoints3, yPoints3, r3, g3, b3 = 10, 10, 0, 0, 255
