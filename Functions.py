@@ -31,9 +31,12 @@ def Scaler(CoordsList, Scale):
     return CoordsList
 
 def PixCalc(IW, IH, xC, yC, Pixels, r, g, b):
+    import numpy as np
+    import math
+    Rs = np.linspace(0, 2*np.pi, len(xC))
     for l in range(len(xC)):
         if xC[l] != 'skip' and yC[l] != 'skip':
-            Pixels[int(-(round((yC[l]+1)*0.5*(IH))-1))-1][int(round((xC[l]+1)*0.5*(IW)-1))-1] = (r, g, b)
+            Pixels[int(-(round((yC[l]+1)*0.5*(IH))-1))-1][int(round((xC[l]+1)*0.5*(IW)-1))-1] = (255*math.sin(Rs[l]), 255*math.sin(Rs[l]+(2/3 * np.pi)), 255*math.sin(Rs[l]+(4/3*np.pi)))
     return Pixels
 
 def PointCreation(Pixels, IH, IW, X, Y, Scale, r, g, b):
