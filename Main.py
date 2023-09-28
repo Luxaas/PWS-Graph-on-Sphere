@@ -7,7 +7,7 @@ def NewImg(xt, yt, zt, punten, oogx, oogy, oogz):
     from Functions import PixCalc, Prep
     import compiler
     tictot=timeit.default_timer()
-    ImgWidth, ImgHeight = 1000, 1000
+    ImgWidth, ImgHeight = 750, 750
         
     Pixels = np.empty([ImgHeight, ImgWidth, 3])
     Pixels.fill(255)
@@ -56,10 +56,11 @@ def NewImg(xt, yt, zt, punten, oogx, oogy, oogz):
     fx, fy = 't', 't^2'
   
     Scale = 1
-
+    tic=timeit.default_timer()
     array = np.array(Pixels, dtype=np.uint8)
     new_image = Image.fromarray(array)
     new_image.save('static/new.png')
+    print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Constructing Image)')
     print(str(round((timeit.default_timer()-tictot)*1000, 8))+ 'ms (Total)')
     # plt.plot(xCoordsScaled, yCoordsScaled)
     # plt.show()
