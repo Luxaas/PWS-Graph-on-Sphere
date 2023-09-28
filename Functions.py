@@ -5,6 +5,7 @@ def Prep(Func):
     for p in function:
         Func = Func.replace(p, "math."+p)
     Func = Func.replace("pi", "np.pi")
+    Func = Func.replace("math.math", "math")
     return Func
     
 def CalcArray(PrepFunc):

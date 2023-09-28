@@ -1,5 +1,2 @@
-from PIL import Image
-import numpy as np
-im = Image.open("new.png")
-a = np.asarray(im)
-print(type(a[1]))
+tic=timeit.default_timer()
+print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (test)')
