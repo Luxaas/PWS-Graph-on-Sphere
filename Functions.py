@@ -32,30 +32,27 @@ def Scaler(CoordsList, Scale):
     return CoordsList
 
 
+
+
 def PixCalc(IW, IH, xC, yC, Pixels, r, g, b):
     import numpy as np
     import math
-
     xCl = []
     yCl = []
 
-    # Construct xCl and yCl lists
+    # Construct xCl and yCl lists, filtering out 'skip' values
     for s in range(len(xC) - 1):
-        a = (yC[s + 1] - yC[s]) / (xC[s + 1] - xC[s])
-        b = yC[s] - (a * xC[s])
-        x_range = np.linspace(xC[s], xC[s + 1], int(math.sqrt((yC[s + 1] - yC[s]) ** 2 + (xC[s + 1] - xC[s]) ** 2) * IH))
-        y_range = [a * x + b for x in x_range]
-        xCl.extend(x_range)
-        yCl.extend(y_range)
+        if xC[s] != 'skip' and yC[s] != 'skip' and xC[s + 1] != 'skip' and yC[s + 1] != 'skip':
+            a = (yC[s + 1] - yC[s]) / (xC[s + 1] - xC[s])
+            b = yC[s] - (a * xC[s])
+            x_range = np.linspace(xC[s], xC[s + 1], int(math.sqrt((yC[s + 1] - yC[s]) ** 2 + (xC[s + 1] - xC[s]) ** 2) * IH))
+            y_range = [a * x + b for x in x_range]
+            xCl.extend(x_range)
+            yCl.extend(y_range)
 
     # Ensure xCl and yCl are NumPy arrays
     xCl = np.array(xCl)
     yCl = np.array(yCl)
-
-    # Filter out 'skip' values
-    valid_indices = np.logical_and(xCl != 'skip', yCl != 'skip')
-    xCl = xCl[valid_indices]
-    yCl = yCl[valid_indices]
 
     # Compute pixel coordinates
     x_pixels = ((xCl + 1) * 0.5 * (IW - 1)).astype(int)
@@ -73,6 +70,7 @@ def PixCalc(IW, IH, xC, yC, Pixels, r, g, b):
     Pixels[y_pixels, x_pixels, 2] = b_values
 
     return Pixels
+
 
 # def PixCalc(IW, IH, xC, yC, Pixels, r, g, b):
 #     import numpy as np
