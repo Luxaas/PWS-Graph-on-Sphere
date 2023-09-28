@@ -44,14 +44,19 @@ def PixCalc(IW, IH, xC, yC, Pixels, r, g, b):
         for i in np.linspace(xC[s], xC[s+1], int((math.sqrt((yC[s+1]-yC[s])**2 + (xC[s+1]-xC[s])**2)*IH))):
             xCl.append(i)
             yCl.append(a*i+b)
-
+    print(max(xC))
+    print(max(yC))
+    print(min(xC))
+    print(min(yC))
     print(max(xCl))
     print(max(yCl))
     print(min(xCl))
     print(min(yCl))
+    print(len(xCl))
+    print(len(yCl))
     for l in range(len(xCl)):
         if xCl[l] != 'skip' and yCl[l] != 'skip':
-            Pixels[int(-(round((yCl[l]+1)*0.5*(IH))-1))-1][int(round((xCl[l]+1)*0.5*(IW)-1))-2] = (255*math.sin(Rs[l]), 255*math.sin(Rs[l]+(2/3 * np.pi)), 255*math.sin(Rs[l]+(4/3*np.pi)))
+            Pixels[int(-(round((yCl[l]+1)*0.5*(IH))-1))-1][int(round((xCl[l]+1)*0.5*(IW)-1))-1] = (255*math.sin(Rs[l]), 255*math.sin(Rs[l]+(2/3 * np.pi)), 255*math.sin(Rs[l]+(4/3*np.pi)))
     return Pixels
 
 def PointCreation(Pixels, IH, IW, X, Y, Scale, r, g, b):
