@@ -1,2 +1,8 @@
-tic=timeit.default_timer()
-print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (test)')
+
+import math
+import numpy as np
+
+expression = "math.cos(200*t) * math.sin(0.5*t)"
+exp_as_func = eval('lambda: ' + expression)
+t = 2*np.pi
+print(exp_as_func())
