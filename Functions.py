@@ -34,12 +34,26 @@ def Scaler(CoordsList, Scale):
 def PixCalc(IW, IH, xC, yC, Pixels, r, g, b):
     import numpy as np
     import math
+    xCl = []
+    yCl = []
     Rs = np.linspace(0, 2*np.pi, len(xC))
-    for l in range(len(xC)):
-        if xC[l] != 'skip' and yC[l] != 'skip':
-            Pixels[int(-(round((yC[l]+1)*0.5*(IH))-1))-1][int(round((xC[l]+1)*0.5*(IW)-1))-1] = (255*math.sin(Rs[l]), 255*math.sin(Rs[l]+(2/3 * np.pi)), 255*math.sin(Rs[l]+(4/3*np.pi)))
+    # y=ax+b
+    for s in range(len(xC)-1):
+        a = (yC[s+1]-yC[s])/(xC[s+1]-xC[s])
+        b = yC[s]-(a*xC[s])  
+        for i in np.linspace(xC[s], xC[s+1], int((math.sqrt((yC[s+1]-yC[s])**2 + (xC[s+1]-xC[s])**2)*IH))):
+            xCl.append(i)
+            yCl.append(a*i+b)
+
+    print(max(xCl))
+    print(max(yCl))
+    print(min(xCl))
+    print(min(yCl))
+    for l in range(len(xCl)):
+        if xCl[l] != 'skip' and yCl[l] != 'skip':
+            Pixels[int(-(round((yCl[l]+1)*0.5*(IH))-1))-1][int(round((xCl[l]+1)*0.5*(IW)-1))-2] = (255*math.sin(Rs[l]), 255*math.sin(Rs[l]+(2/3 * np.pi)), 255*math.sin(Rs[l]+(4/3*np.pi)))
     return Pixels
-#  
+
 def PointCreation(Pixels, IH, IW, X, Y, Scale, r, g, b):
     import numpy as np
     import math
