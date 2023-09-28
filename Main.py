@@ -5,7 +5,7 @@ import timeit
 from PIL import Image
 from Functions import *
 
-ImgWidth, ImgHeight = 2500, 2500
+ImgWidth, ImgHeight = 1000, 1000
 
     
 Pixels = np.empty([ImgHeight, ImgWidth, 3])
@@ -14,6 +14,7 @@ Pixels.fill(255)
 fx, fy, fz = 'cos(312*t)*sin(0,5*t)', 'cos(0.5*t)', 'sin(215*t) * sin(0,5*t)'
 Oog = [0, 0, -5]
 Scherm = [0, 0, -2]
+SchermCor = [0, 0]
 p = [0, 0, 0]
 Bakx = []
 Baky = []
@@ -23,17 +24,22 @@ fy = Prep(fy)
 fz = Prep(fz)
 #  
 # * math.sin(0.3*t)
+
+s = (Scherm[2]-Oog[2])/(0-Oog[2])
+for i in [0, 1]:
+    SchermCor[i] = s*(0-Oog[i]) + Oog[i]
+
 tic=timeit.default_timer()
-for t in np.linspace(0, 2*np.pi, (2**20+1)):
-    p[0] = math.cos(300*t) * math.sin(0.5*t)
-    p[1] = math.cos(50*t)
-    p[2] = math.sin(300*t) * math.sin(0.5*t)
+for t in np.linspace(0, 2*np.pi, (2**17+1)):
+    p[0] = math.cos(150*t) * math.sin(0.5*t)
+    p[1] = math.cos(25*t)
+    p[2] = math.sin(200*t) * math.sin(0.5*t)
     # print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Pixels)')
     s = (Scherm[2]-Oog[2])/(p[2]-Oog[2])
     for i in [0, 1]:
         Scherm[i] = s*(p[i]-Oog[i]) + Oog[i]
-    Bakx.append(Scherm[0])
-    Baky.append(Scherm[1])
+    Bakx.append(Scherm[0]-SchermCor[0])
+    Baky.append(Scherm[1]-SchermCor[1])
     # print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Pixels)')
 print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Calculating)')
 
