@@ -31,33 +31,58 @@ def Scaler(CoordsList, Scale):
         tel +=1 
     return CoordsList
 
+
 def PixCalc(IW, IH, xC, yC, Pixels, r, g, b):
     import numpy as np
     import math
+
     xCl = []
     yCl = []
-    Rs = np.linspace(0, 2*np.pi, len(xC))
-    # y=ax+b
-    for s in range(len(xC)-1):
-        a = (yC[s+1]-yC[s])/(xC[s+1]-xC[s])
-        b = yC[s]-(a*xC[s])  
-        for i in np.linspace(xC[s], xC[s+1], int((math.sqrt((yC[s+1]-yC[s])**2 + (xC[s+1]-xC[s])**2)*IH))):
-            xCl.append(i)
-            yCl.append(a*i+b)
-    print(max(xC))
-    print(max(yC))
-    print(min(xC))
-    print(min(yC))
-    print(max(xCl))
-    print(max(yCl))
-    print(min(xCl))
-    print(min(yCl))
-    print(len(xCl))
-    print(len(yCl))
-    for l in range(len(xCl)):
-        if xCl[l] != 'skip' and yCl[l] != 'skip':
-            Pixels[int(-(round((yCl[l]+1)*0.5*(IH))-1))-1][int(round((xCl[l]+1)*0.5*(IW)-1))-1] = (255*math.sin(Rs[l]), 255*math.sin(Rs[l]+(2/3 * np.pi)), 255*math.sin(Rs[l]+(4/3*np.pi)))
+
+    # Construct xCl and yCl lists
+    for s in range(len(xC) - 1):
+        a = (yC[s + 1] - yC[s]) / (xC[s + 1] - xC[s])
+        b = yC[s] - (a * xC[s])
+        x_range = np.linspace(xC[s], xC[s + 1], int(math.sqrt((yC[s + 1] - yC[s]) ** 2 + (xC[s + 1] - xC[s]) ** 2) * IH))
+        y_range = [a * x + b for x in x_range]
+        xCl.extend(x_range)
+        yCl.extend(y_range)
+
+    # Ensure xCl and yCl are NumPy arrays
+    xCl = np.array(xCl)
+    yCl = np.array(yCl)
+
+    # Filter out 'skip' values
+    valid_indices = np.logical_and(xCl != 'skip', yCl != 'skip')
+    xCl = xCl[valid_indices]
+    yCl = yCl[valid_indices]
+
+    # Compute pixel coordinates
+    x_pixels = ((xCl + 1) * 0.5 * (IW - 1)).astype(int)
+    y_pixels = (IH - 1) - ((yCl + 1) * 0.5 * (IH - 1)).astype(int)
+
+    # Compute color values using vectorized operations
+    Rs = np.linspace(0, 2 * np.pi, len(xCl))
+    r_values = (255 * np.sin(Rs)).astype(np.uint8)
+    g_values = (255 * np.sin(Rs + (2 / 3 * np.pi))).astype(np.uint8)
+    b_values = (255 * np.sin(Rs + (4 / 3 * np.pi))).astype(np.uint8)
+
+    # Assign color values to Pixels using integer indexing
+    Pixels[y_pixels, x_pixels, 0] = r_values
+    Pixels[y_pixels, x_pixels, 1] = g_values
+    Pixels[y_pixels, x_pixels, 2] = b_values
+
     return Pixels
+
+# def PixCalc(IW, IH, xC, yC, Pixels, r, g, b):
+#     import numpy as np
+#     import math
+#     import timeit
+#     Rs = np.linspace(0, 2*np.pi, len(xC))
+#     for l in range(len(xC)):
+#         if xC[l] != 'skip' and yC[l] != 'skip':
+#             Pixels[int(-(round((yC[l]+1)*0.5*(IH))-1))-1][int(round((xC[l]+1)*0.5*(IW)-1))-1] = (255*math.sin(Rs[l]), 255*math.sin(Rs[l]+(2/3 * np.pi)), 255*math.sin(Rs[l]+(4/3*np.pi)))
+#     return Pixels
 
 def PointCreation(Pixels, IH, IW, X, Y, Scale, r, g, b):
     import numpy as np
