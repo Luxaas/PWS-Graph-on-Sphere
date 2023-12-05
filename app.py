@@ -15,7 +15,7 @@ def process_data():
     punten = data.get('punten')
     slider1Value = data.get('slider1Value')
     slider2Value = data.get('slider2Value')
-    slider3Value = data.get('slider3Value')
+    slider3Value = data.get('slider3Value') 
 
     # Process the data as needed
     # You can perform calculations or any other operations here
