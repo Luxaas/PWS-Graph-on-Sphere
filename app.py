@@ -21,6 +21,7 @@ def process_data():
     # Access individual data fields
     yt = data.get('yt')
     punten = data.get('punten')
+    r = data.get('r')
     slider1Value = data.get('slider1Value')
     slider2Value = data.get('slider2Value')
     slider3Value = data.get('slider3Value') 
@@ -29,7 +30,7 @@ def process_data():
     # You can perform calculations or any other operations here
 
     # Return the image as bytes
-    image = generate_image(yt, punten, slider1Value, slider2Value, slider3Value)
+    image = generate_image(yt, punten, slider1Value, slider2Value, slider3Value, r)
     image_bytes = image_to_bytes(image)
     return image_bytes
 
@@ -41,8 +42,8 @@ def index():
 def image(filename):
     return send_from_directory('static', filename)
 
-def generate_image(yt, punten, slider1Value, slider2Value, slider3Value):
-    Pixels = NewImg(yt, punten, slider1Value, slider2Value, slider3Value)
+def generate_image(yt, punten, slider1Value, slider2Value, slider3Value, r):
+    Pixels = NewImg(yt, punten, slider1Value, slider2Value, slider3Value, r)
     array = np.array(Pixels, dtype=np.uint8)
     new_image = Image.fromarray(array)
     return new_image

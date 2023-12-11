@@ -62,6 +62,8 @@ def PixCalc(IW, IH, xC, yC, Pixels, r, g, b, punten):
     # Compute pixel coordinates
     x_pixels = ((xCl + 1) * 0.5 * (IW - 1)).astype(int)
     y_pixels = (IH - 1) - ((yCl + 1) * 0.5 * (IH - 1)).astype(int)
+    print(x_pixels)
+    print(y_pixels)
 
     # Compute color values using vectorized operations
     # Rs = np.linspace(0, 2 * np.pi, len(xCl))
