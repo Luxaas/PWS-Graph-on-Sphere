@@ -53,14 +53,17 @@ def NewImg(xt, yt, zt, punten, oogx, oogy, oogz):
     Pixels = PixCalc(ImgHeight, ImgWidth, Bakx, Baky, Pixels, 0, 0, 0)
     print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Pixels)')
 
-    fx, fy = 't', 't^2'
-  
     Scale = 1
     tic=timeit.default_timer()
+    # array = np.array(Pixels, dtype=np.uint8)
+    # new_image = Image.fromarray(array)
+    # new_image.save('static/new.png')
     array = np.array(Pixels, dtype=np.uint8)
     new_image = Image.fromarray(array)
-    new_image.save('static/new.png')
+    
     print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Constructing Image)')
+    
     print(str(round((timeit.default_timer()-tictot)*1000, 8))+ 'ms (Total)')
+    return new_image
     # plt.plot(xCoordsScaled, yCoordsScaled)
     # plt.show()
