@@ -79,8 +79,6 @@ def NewImg(yt, punten, oogx, oogy, oogz):
     tic=timeit.default_timer()
     Pixels = PixCalc(ImgHeight, ImgWidth, Bakx, Baky, Pixels, 0, 0, 0, punten)
     print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Pixels)')
-
-    fx, fy = 't', 't^2'
   
     Scale = 1
     tic=timeit.default_timer()
