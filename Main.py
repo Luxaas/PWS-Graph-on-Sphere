@@ -1,11 +1,9 @@
 def NewImg(xt, yt, zt, punten, oogx, oogy, oogz):
     import math
-    import matplotlib.pyplot as plt
     import numpy as np
     import timeit
     from PIL import Image
     from Functions import PixCalc, Prep
-    import compiler
     tictot=timeit.default_timer()
     ImgWidth, ImgHeight = 750, 750
         
