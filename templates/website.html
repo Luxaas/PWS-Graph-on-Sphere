@@ -46,49 +46,42 @@
 </head>
 <body>
     <div id="image-container">
-        <img id="image" src="{{ url_for('image', filename='new.png') }}" alt='filename=new.png'>
+        <img id="image" src="" alt='Generated Image'>
     </div>
     
 
     <div id="content-container">
         <div id="text-boxes">
-            <label for="xt">x(t):</label>
-            <input type="text" id="xt" value="math.cos(200*t) * math.sin(0.5*t)">
-            <label for="yt">y(t):</label>
-            <input type="text" id="yt" value="math.cos(25*t)">
-            <label for="zt">z(t):</label>
-            <input type="text" id="zt" value="math.sin(200*t) * math.sin(0.5*t)">
+            <label for="y(t)">y=</label>
+            <input type="text" id="yt" value="1/x">
             <label for="punten">Aantal punten:</label>
-            <input type="text" id="punten" value="200">
+            <input type="text" id="punten" value="400">
         </div>
 
         <div class="slider-container">
             <label for="slider1">Links<>Rechts:</label>
-            <input type="range" id="slider1" min="-3" max="3" value="0" step="0.1">
+            <input type="range" id="slider1" min="-4" max="4" value="0" step="0.1">
             <span id="slider1-value">0</span>
         </div>
 
         <div class="slider-container">
             <label for="slider2">Boven<>Onder:</label>
-            <input type="range" id="slider2" min="-3" max="3" value="0" step="0.1">
+            <input type="range" id="slider2" min="-4" max="4" value="0" step="0.1">
             <span id="slider2-value">0</span>
         </div>
 
         <div class="slider-container">
             <label for="slider3">Dichterbij<>Verderaf:</label>
-            <input type="range" id="slider3" min="-8" max="-2" value="-5" step="0.1">
-            <span id="slider3-value">-5</span>
+            <input type="range" id="slider3" min="-10" max="-2" value="-10" step="0.1">
+            <span id="slider3-value">-10</span>
         </div>
 
         <button id="send-data-button">Send Data to Python</button>
     </div>
 <!-- Add this script at the end of your HTML body -->
     <script>
-        // Function to update the image and refresh the page
         function updateImageAndRefresh() {
-            const xt = document.getElementById("xt").value;
             const yt = document.getElementById("yt").value;
-            const zt = document.getElementById("zt").value;
             const punten = document.getElementById("punten").value;
             const slider1Value = document.getElementById("slider1").value;
             const slider2Value = document.getElementById("slider2").value;
@@ -96,9 +89,7 @@
 
             // Create a data object with the values
             const data = {
-                xt,
                 yt,
-                zt,
                 punten,
                 slider1Value,
                 slider2Value,
@@ -113,43 +104,27 @@
                 },
                 body: JSON.stringify(data)
             })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the response from Python if needed
-                console.log(data);
+            .then(response => response.blob())
+            .then(blob => {
+                // Create an object URL from the blob
+                const blobUrl = URL.createObjectURL(blob);
 
-                // Reload the page to refresh the image and other content
-                const timestamp = new Date().getTime(); // Generate a new timestamp
-                const imageSrc = `/images/new.png?t=${timestamp}`;
-                document.getElementById("image").src = imageSrc;
-                // location.reload();
-
+                // Set the image source to the object URL
+                document.getElementById("image").src = blobUrl;
             })
             .catch(error => {
                 console.error('Error:', error);
-            });
-        }
-
+                    });
+                };
         // JavaScript to update slider values
-        const slider1 = document.getElementById("slider1");
-        const slider1Value = document.getElementById("slider1-value");
-        slider1.addEventListener("input", function() {
-            slider1Value.textContent = slider1.value;
-            updateImageAndRefresh();
-        });
+        ['slider1', 'slider2', 'slider3'].forEach(id => {
+            const slider = document.getElementById(id);
+            const sliderValue = document.getElementById(`${id}-value`);
 
-        const slider2 = document.getElementById("slider2");
-        const slider2Value = document.getElementById("slider2-value");
-        slider2.addEventListener("input", function() {
-            slider2Value.textContent = slider2.value;
-            updateImageAndRefresh();
-        });
-
-        const slider3 = document.getElementById("slider3");
-        const slider3Value = document.getElementById("slider3-value");
-        slider3.addEventListener("input", function() {
-            slider3Value.textContent = slider3.value;
-            updateImageAndRefresh();
+            slider.addEventListener("input", function() {
+                sliderValue.textContent = slider.value;
+                updateImageAndRefresh();
+            });
         });
 
         // JavaScript to send data to Python and refresh when the button is clicked
