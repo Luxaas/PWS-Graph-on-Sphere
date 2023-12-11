@@ -41,17 +41,19 @@ def PixCalc(IW, IH, xC, yC, Pixels, r, g, b, punten):
     xCl = []
     yCl = []
 
-    # Construct xCl and yCl lists, filtering out 'skip' values
+    # Construct xCl and yCl lists
     for s in range(punten-1):
         try:
-            if xC[s] != 'skip' and yC[s] != 'skip' and xC[s + 1] != 'skip' and yC[s + 1] != 'skip':
-                if (xC[s + 1] - xC[s]) != 0:
-                    a = (yC[s + 1] - yC[s]) / (xC[s + 1] - xC[s])
-                c = yC[s] - (a * xC[s])
-                x_range = np.linspace(xC[s], xC[s + 1], int(math.sqrt((yC[s + 1] - yC[s]) ** 2 + (xC[s + 1] - xC[s]) ** 2) * IH))
-                y_range = [a * x + c for x in x_range]
-                xCl.extend(x_range)
-                yCl.extend(y_range)
+            if (xC[s + 1] - xC[s]) != 0:
+                a = (yC[s + 1] - yC[s]) / (xC[s + 1] - xC[s])
+            c = yC[s] - (a * xC[s])
+            l = int(math.sqrt((yC[s + 1] - yC[s]) ** 2 + (xC[s + 1] - xC[s]) ** 2) * IH)
+            if l == 0:
+                l = 1
+            x_range = np.linspace(xC[s], xC[s + 1], l)
+            y_range = [a * x + c for x in x_range]
+            xCl.extend(x_range)
+            yCl.extend(y_range)
         except:
             1+1
 
@@ -62,8 +64,8 @@ def PixCalc(IW, IH, xC, yC, Pixels, r, g, b, punten):
     # Compute pixel coordinates
     x_pixels = ((xCl + 1) * 0.5 * (IW - 1)).astype(int)
     y_pixels = (IH - 1) - ((yCl + 1) * 0.5 * (IH - 1)).astype(int)
-    print(x_pixels)
-    print(y_pixels)
+    # print(x_pixels)
+    # print(y_pixels)
 
     # Compute color values using vectorized operations
     # Rs = np.linspace(0, 2 * np.pi, len(xCl))

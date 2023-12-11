@@ -55,7 +55,7 @@ def NewImg(yt, punten, oogx, oogy, oogz, r):
             # print(str(po) + ") " + str(float(Scherm[0])- float(SchermCor[0]))+  ", " + str(float(Scherm[1])- float(SchermCor[1])))
 
 
-    for t in np.linspace(-np.pi, np.pi, 500):
+    for t in np.linspace(-np.pi, np.pi, 250):
         p[0] = math.sin(t)
         p[1] = 0
         p[2] = math.cos(t)
@@ -67,7 +67,7 @@ def NewImg(yt, punten, oogx, oogy, oogz, r):
         if Scherm[1]-SchermCor[1] <=1 and Scherm[1]-SchermCor[1] >= -1:
             Baky.append(Scherm[1]-SchermCor[1])
 
-    for t in np.linspace(-np.pi, np.pi, 500):
+    for t in np.linspace(-np.pi, np.pi, 250):
         p[0] = 0
         p[1] = math.sin(t)
         p[2] = math.cos(t)
@@ -79,11 +79,11 @@ def NewImg(yt, punten, oogx, oogy, oogz, r):
         if Scherm[1]-SchermCor[1] <=1 and Scherm[1]-SchermCor[1] >= -1:
             Baky.append(Scherm[1]-SchermCor[1])
         
-    print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Calculating)')
+    # print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Calculating)')
 
     tic=timeit.default_timer()
     Pixels = PixCalc(ImgHeight, ImgWidth, Bakx, Baky, Pixels, 0, 0, 0, punten)
-    print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Pixels)')
+    # print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Pixels)')
   
     Scale = 1
     tic=timeit.default_timer()
@@ -93,7 +93,7 @@ def NewImg(yt, punten, oogx, oogy, oogz, r):
     array = np.array(Pixels, dtype=np.uint8)
     new_image = Image.fromarray(array)
     
-    print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Constructing Image)')
+    # print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Constructing Image)')
     
     print(str(round((timeit.default_timer()-tictot)*1000, 8))+ 'ms (Total)')
     return new_image
