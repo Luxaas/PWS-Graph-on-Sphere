@@ -113,43 +113,27 @@
                 },
                 body: JSON.stringify(data)
             })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the response from Python if needed
-                console.log(data);
+            .then(response => response.blob())
+            .then(blob => {
+                // Create an object URL from the blob
+                const blobUrl = URL.createObjectURL(blob);
 
-                // Reload the page to refresh the image and other content
-                const timestamp = new Date().getTime(); // Generate a new timestamp
-                const imageSrc = `/images/new.png?t=${timestamp}`;
-                document.getElementById("image").src = imageSrc;
-                // location.reload();
-
+                // Set the image source to the object URL
+                document.getElementById("image").src = blobUrl;
             })
             .catch(error => {
                 console.error('Error:', error);
-            });
-        }
-
+                    });
+                };
         // JavaScript to update slider values
-        const slider1 = document.getElementById("slider1");
-        const slider1Value = document.getElementById("slider1-value");
-        slider1.addEventListener("input", function() {
-            slider1Value.textContent = slider1.value;
-            updateImageAndRefresh();
-        });
+        ['slider1', 'slider2', 'slider3'].forEach(id => {
+            const slider = document.getElementById(id);
+            const sliderValue = document.getElementById(`${id}-value`);
 
-        const slider2 = document.getElementById("slider2");
-        const slider2Value = document.getElementById("slider2-value");
-        slider2.addEventListener("input", function() {
-            slider2Value.textContent = slider2.value;
-            updateImageAndRefresh();
-        });
-
-        const slider3 = document.getElementById("slider3");
-        const slider3Value = document.getElementById("slider3-value");
-        slider3.addEventListener("input", function() {
-            slider3Value.textContent = slider3.value;
-            updateImageAndRefresh();
+            slider.addEventListener("input", function() {
+                sliderValue.textContent = slider.value;
+                updateImageAndRefresh();
+            });
         });
 
         // JavaScript to send data to Python and refresh when the button is clicked
