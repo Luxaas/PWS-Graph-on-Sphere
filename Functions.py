@@ -1,5 +1,5 @@
 def Prep(Func):
-    function = ["cos", "sin", "tan", "sqrt", "atan"]
+    function = ["cos", "sin", "tan", "sqrt", "atan", "log", "e"]
     Func = Func.replace(",", ".")
     Func = Func.replace("^", "**")
     for p in function:
