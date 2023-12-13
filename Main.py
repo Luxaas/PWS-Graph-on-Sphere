@@ -49,7 +49,7 @@ def NewImg(yt, punten, oogx, oogy, oogz, r):
         if Scherm[1]-SchermCor[1] <=1 and Scherm[1]-SchermCor[1] >= -1:
             Baky.append(Scherm[1]-SchermCor[1])
 
-    for t in np.linspace(-np.pi, np.pi, 250):
+    for t in np.linspace(-np.pi, np.pi, 200):
         p[0] = math.sin(t)
         p[1] = 0
         p[2] = math.cos(t)
@@ -61,7 +61,7 @@ def NewImg(yt, punten, oogx, oogy, oogz, r):
         if Scherm[1]-SchermCor[1] <=1 and Scherm[1]-SchermCor[1] >= -1:
             Baky.append(Scherm[1]-SchermCor[1])
 
-    for t in np.linspace(-np.pi, np.pi, 250):
+    for t in np.linspace(-np.pi, 1.01*np.pi, 200):
         p[0] = 0
         p[1] = math.sin(t)
         p[2] = math.cos(t)

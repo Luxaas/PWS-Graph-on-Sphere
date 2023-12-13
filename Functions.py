@@ -21,9 +21,7 @@ def PixCalc(IW, IH, xC, yC, Pixels, punten):
             if (xC[s + 1] - xC[s]) != 0:
                 a = (yC[s + 1] - yC[s]) / (xC[s + 1] - xC[s])
             c = yC[s] - (a * xC[s])
-            l = int(math.sqrt((yC[s + 1] - yC[s]) ** 2 + (xC[s + 1] - xC[s]) ** 2) * IH)
-            if l == 0:
-                l = 1
+            l = int(math.ceil(math.sqrt((yC[s + 1] - yC[s]) ** 2 + (xC[s + 1] - xC[s]) ** 2) * IH))
             x_range = np.linspace(xC[s], xC[s + 1], l)
             y_range = [a * x + c for x in x_range]
             xCl.extend(x_range)
