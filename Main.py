@@ -5,10 +5,10 @@ def NewImg(xt, yt, zt, punten, oogx, oogy, oogz):
     from PIL import Image
     from Functions import PixCalc, Prep
     tictot=timeit.default_timer()
-    ImgWidth, ImgHeight = 750, 750
+    ImgWidth, ImgHeight = 1000, 1000
         
     Pixels = np.empty([ImgHeight, ImgWidth, 3])
-    Pixels.fill(255)
+    Pixels.fill(0)
     Oog = [float(oogx), float(oogy), float(oogz)]
     Scherm = [0, 0, -2]
     SchermCor = [0, 0]
