@@ -37,7 +37,6 @@ def NewImg(yt, punten, oogx, oogy, oogz, r):
         else:
             k[0] = eval(xtc)
         r = float(r)
-        
         p[0] = (2*r*k[0])/(r**2+k[0]**2+k[1]**2)
         p[1] = (2*r*k[1])/(r**2+k[0]**2+k[1]**2)
         p[2] = (r**2-k[0]**2-k[1]**2)/(r**2+k[0]**2+k[1]**2)
