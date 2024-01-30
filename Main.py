@@ -1,4 +1,4 @@
-def NewImg(xt, yt, zt, punten, oogx, oogy, oogz):
+def NewImg(xt, yt, zt, punten, oogx, oogy, oogz, color):
     import math
     import numpy as np
     import timeit
@@ -6,30 +6,32 @@ def NewImg(xt, yt, zt, punten, oogx, oogy, oogz):
     from Functions import PixCalc, Prep
     tictot=timeit.default_timer()
     ImgWidth, ImgHeight = 1000, 1000
-    red_value, green_value, blue_value = 255, 255, 255
-    Pixels = np.full((ImgHeight, ImgWidth, 3), [red_value, green_value, blue_value], dtype=np.uint8)
+    rgb = tuple(int((color.lstrip('#'))[i:i+2], 16) for i in (0, 2, 4))
+    Pixels = np.full((ImgHeight, ImgWidth, 3), [rgb[0], rgb[1], rgb[2]], dtype=np.uint8)
     Oog = [float(oogx), float(oogy), float(oogz)]
     Scherm = [0, 0, -2]
     SchermCor = [0, 0]
     p = [0, 0, 0]
     Bakx = []
     Baky = []
-
-    xt = Prep(xt)
-    yt = Prep(yt)
-    zt = Prep(zt)
-    xtc = compile(xt, '<string>', 'eval')
-    ytc = compile(yt, '<string>', 'eval')
-    ztc = compile(zt, '<string>', 'eval')
-
+    if punten == 'true':
+        punten = 200000
+    else:
+        punten = 2000
+    
+        
+    xt = float(xt)
+    yt = float(yt)
+    zt = float(zt)
+    
     s = (Scherm[2]-Oog[2])/(0-Oog[2])
     for i in [0, 1]:
         SchermCor[i] = s*(0-Oog[i]) + Oog[i]
 
     for t in np.linspace(0, 2*np.pi, (int(punten)+1)):
-        p[0] = eval(xtc)
-        p[1] = eval(ytc)
-        p[2] = eval(ztc)
+        p[0] = math.cos(xt*t) * math.sin(0.5*t)
+        p[1] = math.cos(yt*t)
+        p[2] = math.sin(zt*t) * math.sin(0.5*t)
         # print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Pixels)')
         s = (Scherm[2]-Oog[2])/(p[2]-Oog[2])
         for i in [0, 1]:
@@ -43,7 +45,6 @@ def NewImg(xt, yt, zt, punten, oogx, oogy, oogz):
         else:
             Baky.append('skip')
         # print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Pixels)')
-
     Pixels = PixCalc(ImgHeight, ImgWidth, Bakx, Baky, Pixels, 0, 0, 0)
 
     array = np.array(Pixels, dtype=np.uint8)
