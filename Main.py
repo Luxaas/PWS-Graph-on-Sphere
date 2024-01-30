@@ -1,4 +1,4 @@
-def NewImg(xt, yt, zt, punten, oogx, oogy, oogz):
+def NewImg(xt, yt, zt, punten, oogx, oogy, oogz,):
     import math
     import numpy as np
     import timeit

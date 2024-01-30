@@ -104,7 +104,7 @@
         <label>Achtergrond kleur: </label>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>
         <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
-        <input type="text" id="color" data-coloris>
+        <input type="text" id="color" value="#ffffff" data-coloris>
 
     </div>
 <!-- Add this script at the end of your HTML body -->
@@ -122,6 +122,8 @@
             const slider2Value = document.getElementById("slider2").value;
             const slider3Value = document.getElementById("slider3").value;
 
+            const color = document.getElementById("color").value;
+
             // Create a data object with the values
             const data = {
                 xt,
@@ -130,7 +132,8 @@
                 punten: punten.toString(),
                 slider1Value,
                 slider2Value,
-                slider3Value
+                slider3Value,
+                color
             };
 
             // Send the data to your Python script using an HTTP request
