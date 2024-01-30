@@ -57,33 +57,45 @@
         <img id="image" src="{{ url_for('image', filename='new.png') }}" alt='filename=new.png'>
     </div>
     
-
+    
     <div id="content-container">
-
+        <font size="+2">Afbeelding Wijzigen: </font>
         <div class="slider-container">
             <span id="xt-value">x(t) = cos(200t) * sin(0.5t)</span>
-            <input type="range" id="xt" min="0" max="200" value="200" step="10">
+            <input type="range" id="xt" min="50" max="200" value="200" step="10">
             
         </div>
 
         <div class="slider-container">
-            <span id="yt-value">y(t) = cos(50t)</span>
-            <input type="range" id="yt" min="0" max="200" value="50" step="10">
+            <span id="yt-value">y(t) = cos(25t)</span>
+            <input type="range" id="yt" min="0" max="75" value="25" step="5">
             
         </div>
 
         <div class="slider-container">
             <span id="zt-value">z(t) = sin(200t) * sin(0.5*t)</span>
-            <input type="range" id="zt" min="0" max="200" value="200" step="10">
-            
+            <input type="range" id="zt" min="50" max="200" value="200" step="10">
         </div>
-        <label>&nbsp </label>
+
+        <div class="slider-container">
+            <span id="colorshift-value">Kleur?</span>
+            <input type="range" id="colorshift" min="0" max="5" value="0" step="1">
+            <p></p>
+        </div>
+        <label>Achtergrond kleur: </label>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>
+        <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
+        <input type="text" id="color" value="#ffffff" data-coloris>
+
+        <p></p>
         <div class="checkbox">
             
             <input type="checkbox" id="punten">
             <label for="Checkbox">Hoge kwaliteit?</label>
         </div>
-
+        <p> </p>
+        <p> </p>
+        <font size="+2">Rondkijken: </font>
         <div class="slider-container">
             <label for="slider1">Links<>Rechts:</label>
             <input type="range" id="slider1" min="-3" max="3" value="0" step="0.1">
@@ -102,11 +114,7 @@
             <span id="slider3-value">-5</span>
         </div>
 
-        <label>Achtergrond kleur: </label>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>
-        <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
-        <input type="text" id="color" value="#ffffff" data-coloris>
-
+        
         <button id="send-data-button">Send Data to Python</button>
     </div>
 <!-- Add this script at the end of your HTML body -->
@@ -126,6 +134,7 @@
 
             const color = document.getElementById("color").value;
 
+            const colorshift = document.getElementById("colorshift").value;
             // Create a data object with the values
             const data = {
                 xt,
@@ -135,7 +144,8 @@
                 slider1Value,
                 slider2Value,
                 slider3Value,
-                color
+                color,
+                colorshift
             };
 
             // Send the data to your Python script using an HTTP request
@@ -200,6 +210,15 @@
                 updateImageAndRefresh();
             });
         });
+
+        ['colorshift'].forEach(id => {
+            const slider = document.getElementById(id);
+            slider.addEventListener("input", function() {
+                puntenCheckbox.checked = false;
+                updateImageAndRefresh();
+            });
+        });
+
         // JavaScript to send data to Python and refresh when the button is clicked
         const sendDataButton = document.getElementById("send-data-button");
         sendDataButton.addEventListener("click", function() {

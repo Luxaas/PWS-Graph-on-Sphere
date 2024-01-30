@@ -1,4 +1,4 @@
-def NewImg(xt, yt, zt, punten, oogx, oogy, oogz, color):
+def NewImg(xt, yt, zt, punten, oogx, oogy, oogz, color, colorshift):
     import math
     import numpy as np
     import timeit
@@ -18,8 +18,8 @@ def NewImg(xt, yt, zt, punten, oogx, oogy, oogz, color):
         punten = 200000
     else:
         punten = 2000
-    
-        
+    colorshift = int(colorshift)
+    print(colorshift)
     xt = float(xt)
     yt = float(yt)
     zt = float(zt)
@@ -45,7 +45,7 @@ def NewImg(xt, yt, zt, punten, oogx, oogy, oogz, color):
         else:
             Baky.append('skip')
         # print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Pixels)')
-    Pixels = PixCalc(ImgHeight, ImgWidth, Bakx, Baky, Pixels, 0, 0, 0)
+    Pixels = PixCalc(ImgHeight, ImgWidth, Bakx, Baky, Pixels, colorshift)
 
     array = np.array(Pixels, dtype=np.uint8)
     new_image = Image.fromarray(array)

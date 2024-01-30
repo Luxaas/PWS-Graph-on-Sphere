@@ -8,7 +8,7 @@ def Prep(Func):
     Func = Func.replace("math.math", "math")
     return Func
 
-def PixCalc(IW, IH, xC, yC, Pixels, r, g, b):
+def PixCalc(IW, IH, xC, yC, Pixels, colorshift):
     import numpy as np
     import math
     xCl = []
@@ -35,9 +35,9 @@ def PixCalc(IW, IH, xC, yC, Pixels, r, g, b):
 
     # Compute color values using vectorized operations
     Rs = np.linspace(0, 2 * np.pi, len(xCl))
-    r_values = (255 * np.sin(Rs + (0/3 * np.pi))).astype(np.uint8)
-    g_values = (255 * np.sin(Rs + (2/3 * np.pi))).astype(np.uint8)
-    b_values = (255 * np.sin(Rs + (4/3 * np.pi))).astype(np.uint8)
+    r_values = (255 * np.sin(Rs + (colorshift/3 * np.pi))).astype(np.uint8)
+    g_values = (255 * np.sin(Rs + ((2+colorshift)/3 * np.pi))).astype(np.uint8)
+    b_values = (255 * np.sin(Rs + ((4+colorshift)/3 * np.pi))).astype(np.uint8)
 
     # Assign color values to Pixels using integer indexing
     Pixels[y_pixels, x_pixels, 0] = r_values
