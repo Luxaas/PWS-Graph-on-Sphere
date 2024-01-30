@@ -42,14 +42,6 @@
         .slider-container input[type="range"] {
             width: 100%; /* Make sliders fill the container */
         }
-        .checkbox {
-            display: flex;
-            align-items: center;
-        }
-
-        .checkbox input[type="checkbox"] {
-            margin-right: 5px;  /* Of elke andere gewenste rechtermarge */
-        }
     </style>
 </head>
 <body>
@@ -59,29 +51,15 @@
     
 
     <div id="content-container">
-
-        <div class="slider-container">
-            <span id="xt-value">x(t) = cos(200t) * sin(0.5t)</span>
-            <input type="range" id="xt" min="0" max="200" value="200" step="10">
-            
-        </div>
-
-        <div class="slider-container">
-            <span id="yt-value">y(t) = cos(50t)</span>
-            <input type="range" id="yt" min="0" max="200" value="50" step="10">
-            
-        </div>
-
-        <div class="slider-container">
-            <span id="zt-value">z(t) = sin(200t) * sin(0.5*t)</span>
-            <input type="range" id="zt" min="0" max="200" value="200" step="10">
-            
-        </div>
-        <label>&nbsp </label>
-        <div class="checkbox">
-            
-            <input type="checkbox" id="punten">
-            <label for="Checkbox">Hoge kwaliteit?</label>
+        <div id="text-boxes">
+            <label for="xt">x(t):</label>
+            <input type="text" id="xt" value="cos(200*t) * sin(0.5*t)">
+            <label for="yt">y(t):</label>
+            <input type="text" id="yt" value="cos(25*t)">
+            <label for="zt">z(t):</label>
+            <input type="text" id="zt" value="sin(200*t) * sin(0.5*t)">
+            <label for="punten">Aantal punten:</label>
+            <input type="text" id="punten" value="2000">
         </div>
 
         <div class="slider-container">
@@ -102,11 +80,6 @@
             <span id="slider3-value">-5</span>
         </div>
 
-        <label>Achtergrond kleur: </label>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>
-        <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
-        <input type="text" id="color" value="#ffffff" data-coloris>
-
         <button id="send-data-button">Send Data to Python</button>
     </div>
 <!-- Add this script at the end of your HTML body -->
@@ -116,26 +89,20 @@
             const xt = document.getElementById("xt").value;
             const yt = document.getElementById("yt").value;
             const zt = document.getElementById("zt").value;
-
-            const puntenCheckbox = document.getElementById("punten");
-            const punten = puntenCheckbox.checked;
-
+            const punten = document.getElementById("punten").value;
             const slider1Value = document.getElementById("slider1").value;
             const slider2Value = document.getElementById("slider2").value;
             const slider3Value = document.getElementById("slider3").value;
-
-            const color = document.getElementById("color").value;
 
             // Create a data object with the values
             const data = {
                 xt,
                 yt,
                 zt,
-                punten: punten.toString(),
+                punten,
                 slider1Value,
                 slider2Value,
-                slider3Value,
-                color
+                slider3Value
             };
 
             // Send the data to your Python script using an HTTP request
@@ -165,56 +132,13 @@
 
             slider.addEventListener("input", function() {
                 sliderValue.textContent = slider.value;
-                puntenCheckbox.checked = false;
                 updateImageAndRefresh();
             });
         });
 
-        ['xt'].forEach(id => {
-            const slider = document.getElementById(id);
-            const sliderValue = document.getElementById(`${id}-value`);
-
-            slider.addEventListener("input", function() {
-                sliderValue.textContent = 'x(t) = cos('+slider.value+'t) * sin(0.5t)';
-                puntenCheckbox.checked = false;
-                updateImageAndRefresh();
-            });
-        });
-        ['yt'].forEach(id => {
-            const slider = document.getElementById(id);
-            const sliderValue = document.getElementById(`${id}-value`);
-
-            slider.addEventListener("input", function() {
-                sliderValue.textContent = 'y(t) = cos('+slider.value+'t)';
-                puntenCheckbox.checked = false;
-                updateImageAndRefresh();
-            });
-        });
-        ['zt'].forEach(id => {
-            const slider = document.getElementById(id);
-            const sliderValue = document.getElementById(`${id}-value`);
-
-            slider.addEventListener("input", function() {
-                sliderValue.textContent = 'z(t) = sin('+slider.value+'t) * sin(0.5t)';
-                puntenCheckbox.checked = false;
-                updateImageAndRefresh();
-            });
-        });
         // JavaScript to send data to Python and refresh when the button is clicked
         const sendDataButton = document.getElementById("send-data-button");
         sendDataButton.addEventListener("click", function() {
-            updateImageAndRefresh();
-        });
-
-        const puntenCheckbox = document.getElementById("punten");
-        puntenCheckbox.addEventListener("change", updateImageAndRefresh);
-        // Event listener for page load
-        document.addEventListener("DOMContentLoaded", function() {
-            // Call the update function when the page has finished loading
-            updateImageAndRefresh();
-        });
-        document.addEventListener('coloris:pick', event => {
-            puntenCheckbox.checked = false;
             updateImageAndRefresh();
         });
     </script>
