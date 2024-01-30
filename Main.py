@@ -14,22 +14,23 @@ def NewImg(xt, yt, zt, punten, oogx, oogy, oogz):
     p = [0, 0, 0]
     Bakx = []
     Baky = []
-
-    xt = Prep(xt)
-    yt = Prep(yt)
-    zt = Prep(zt)
-    xtc = compile(xt, '<string>', 'eval')
-    ytc = compile(yt, '<string>', 'eval')
-    ztc = compile(zt, '<string>', 'eval')
-
+    if punten == 'true':
+        punten = 200000
+    else:
+        punten = 2000
+        
+    xt = float(xt)
+    yt = float(yt)
+    zt = float(zt)
+    
     s = (Scherm[2]-Oog[2])/(0-Oog[2])
     for i in [0, 1]:
         SchermCor[i] = s*(0-Oog[i]) + Oog[i]
 
     for t in np.linspace(0, 2*np.pi, (int(punten)+1)):
-        p[0] = eval(xtc)
-        p[1] = eval(ytc)
-        p[2] = eval(ztc)
+        p[0] = math.cos(xt*t) * math.sin(0.5*t)
+        p[1] = math.cos(yt*t)
+        p[2] = math.sin(zt*t) * math.sin(0.5*t)
         # print(str(round((timeit.default_timer()-tic)*1000, 8))+ 'ms (Pixels)')
         s = (Scherm[2]-Oog[2])/(p[2]-Oog[2])
         for i in [0, 1]:

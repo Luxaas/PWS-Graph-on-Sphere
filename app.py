@@ -27,9 +27,11 @@ def process_data():
     slider2Value = data.get('slider2Value')
     slider3Value = data.get('slider3Value')
 
+
+
     # Process the data as needed
     # You can perform calculations or any other operations here
-
+    
     # Return the image as bytes
     image = generate_image(xt, yt, zt, punten, slider1Value, slider2Value, slider3Value)
     image_bytes = image_to_bytes(image)
