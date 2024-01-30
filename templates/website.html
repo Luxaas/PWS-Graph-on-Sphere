@@ -77,8 +77,9 @@
             <input type="range" id="zt" min="0" max="200" value="200" step="10">
             
         </div>
-
+        <label>&nbsp </label>
         <div class="checkbox">
+            
             <input type="checkbox" id="punten">
             <label for="Checkbox">Hoge kwaliteit?</label>
         </div>
@@ -106,6 +107,7 @@
         <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
         <input type="text" id="color" value="#ffffff" data-coloris>
 
+        <button id="send-data-button">Send Data to Python</button>
     </div>
 <!-- Add this script at the end of your HTML body -->
     <script>
@@ -212,6 +214,7 @@
             updateImageAndRefresh();
         });
         document.addEventListener('coloris:pick', event => {
+            puntenCheckbox.checked = false;
             updateImageAndRefresh();
         });
     </script>

@@ -45,8 +45,8 @@ def index():
 def image(filename):
     return send_from_directory('static', filename)
 
-def generate_image(xt, yt, zt, punten, slider1Value, slider2Value, slider3Value):
-    Pixels = NewImg(xt, yt, zt, punten, slider1Value, slider2Value, slider3Value)
+def generate_image(xt, yt, zt, punten, slider1Value, slider2Value, slider3Value, color):
+    Pixels = NewImg(xt, yt, zt, punten, slider1Value, slider2Value, slider3Value, color)
     array = np.array(Pixels, dtype=np.uint8)
     new_image = Image.fromarray(array)
     return new_image
